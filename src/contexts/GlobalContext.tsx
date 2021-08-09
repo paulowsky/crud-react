@@ -17,14 +17,16 @@ export function GlobalProvider({ children }: any) {
   // eslint-disable-next-line no-unused-vars
   const [code, setCode, removeCode] = useLocalStorage('@app: code')
 
-  useEffect(() => {
+  useEffect(() => verifyLocalStorage(), [movies, code])
+
+  function verifyLocalStorage() {
     try {
       if (!movies && movies !== []) setMovies([])
       if (!code && code !== 0) setCode(0)
     } catch (err) {
       console.log(err)
     }
-  }, [movies, code])
+  }
 
   return (
     <GlobalContext.Provider

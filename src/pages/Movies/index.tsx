@@ -119,28 +119,29 @@ function Movies() {
           </Tr>
         </Thead>
         <Tbody>
-          {movies.map((movie: any) => (
-            <Tr key={movie.id}>
-              <Td isNumeric>{movie.id}</Td>
-              <Td>{movie.name}</Td>
-              <Td>
-                <IconButton
-                  aria-label="Edit"
-                  variant="solid"
-                  colorScheme="blue"
-                  onClick={() => handleEdit(movie)}
-                  icon={<EditIcon />}
-                />
-                <IconButton
-                  aria-label="Delete"
-                  variant="solid"
-                  colorScheme="red"
-                  onClick={() => handleDelete(movie)}
-                  icon={<DeleteIcon />}
-                />
-              </Td>
-            </Tr>
-          ))}
+          {movies &&
+            movies.map((movie: any) => (
+              <Tr key={movie.id}>
+                <Td isNumeric>{movie.id}</Td>
+                <Td>{movie.name}</Td>
+                <Td>
+                  <IconButton
+                    aria-label="Edit"
+                    variant="solid"
+                    colorScheme="blue"
+                    onClick={() => handleEdit(movie)}
+                    icon={<EditIcon />}
+                  />
+                  <IconButton
+                    aria-label="Delete"
+                    variant="solid"
+                    colorScheme="red"
+                    onClick={() => handleDelete(movie)}
+                    icon={<DeleteIcon />}
+                  />
+                </Td>
+              </Tr>
+            ))}
         </Tbody>
       </Table>
       <Button colorScheme="blue" onClick={onOpen}>

@@ -16,12 +16,13 @@ function Home(props: any) {
           </Tr>
         </Thead>
         <Tbody>
-          {movies.map((movie: any) => (
-            <Tr key={movie.id}>
-              <Td isNumeric>{movie.id}</Td>
-              <Td>{movie.name}</Td>
-            </Tr>
-          ))}
+          {movies &&
+            movies.map((movie: any) => (
+              <Tr key={movie.id}>
+                <Td isNumeric>{movie.id}</Td>
+                <Td>{movie.name}</Td>
+              </Tr>
+            ))}
         </Tbody>
       </Table>
     </div>
