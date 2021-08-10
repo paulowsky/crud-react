@@ -10,6 +10,7 @@ export function Header() {
       as="header"
       h="4.2rem"
       w="100%"
+      zIndex="1"
       bgColor="white"
       px="8"
       shadow="0 0 20px rgba(0, 0, 0, 0.05)"

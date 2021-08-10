@@ -5,7 +5,8 @@ import {
   Flex,
   Spacer,
   Image,
-  Text
+  Text,
+  SimpleGrid
 } from '@chakra-ui/react'
 import { useHistory } from 'react-router-dom'
 
@@ -39,17 +40,22 @@ function Home(props: any) {
         </Text>
       </Center>
 
-      <Box
-        mt="1rem"
-        mx="1rem"
-        maxW="sm"
-        borderWidth="1px"
-        borderRadius="lg"
-        overflow="hidden"
+      <SimpleGrid
+        mb="1rem"
+        columns={{ sm: 2, md: 3, lg: 4, xl: 5 }}
+        spacing="1"
       >
         {movies &&
           movies.map((movie: any) => (
-            <>
+            <Box
+              key={movie.id}
+              mt="1rem"
+              mx="1rem"
+              maxW="sm"
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+            >
               <Image src={movie.imageUrl} alt={movie.name} />
 
               <Box p="6">
@@ -63,9 +69,9 @@ function Home(props: any) {
                   {movie.name}
                 </Box>
               </Box>
-            </>
+            </Box>
           ))}
-      </Box>
+      </SimpleGrid>
     </div>
   )
 }

@@ -10,21 +10,24 @@ import {
   ModalOverlay
 } from '@chakra-ui/modal'
 import { useForm } from 'react-hook-form'
-import { TableCaption } from '@chakra-ui/table'
-import { Table, Tbody, Td, Th, Thead, Tr } from './Table'
 import {
   FormControl,
   FormErrorMessage,
   FormLabel
 } from '@chakra-ui/form-control'
 import { Input } from '@chakra-ui/input'
-import { Text } from '@chakra-ui/react'
+import {
+  Box,
+  Text,
+  Image,
+  HStack,
+  SimpleGrid,
+  useBreakpointValue
+} from '@chakra-ui/react'
 import { useState } from 'react'
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 
 import useGlobal from 'src/hooks/useGlobal'
-
-import './styles.css'
 
 function Movies() {
   const { movies, setMovies, code, setCode } = useGlobal()
@@ -33,6 +36,8 @@ function Movies() {
     handleSubmit,
     formState: { errors }
   } = useForm()
+
+  const mobile = useBreakpointValue({ base: true, sm: false })
 
   const [addingName, setAddingName] = useState('')
   const [addingImageUrl, setAddingImageUrl] = useState('')
@@ -133,44 +138,67 @@ function Movies() {
         </form>
       </Modal>
 
-      <Table variant="striped" colorScheme="purple">
-        <TableCaption>Movies playlist to watch soon!</TableCaption>
-        <Thead>
-          <Tr>
-            <Th>ID</Th>
-            <Th>Name</Th>
-            <Th>Image URL</Th>
-            <Th>Actions</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {movies &&
-            movies.map((movie: any) => (
-              <Tr key={movie.id}>
-                <Td isNumeric>{movie.id}</Td>
-                <Td>{movie.name}</Td>
-                <Td>{movie.imageUrl}</Td>
-                <Td>
+      <SimpleGrid
+        mt={mobile ? '2rem' : ''}
+        mb="5rem"
+        columns={{ sm: 1, md: 2, lg: 3, xl: 4 }}
+        spacing="1"
+      >
+        {movies &&
+          movies.map((movie: any) => (
+            <Box
+              key={movie.id}
+              mt="1rem"
+              mx="1rem"
+              maxW="sm"
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+            >
+              <Image src={movie.imageUrl} alt={movie.name} />
+              <Box p="5">
+                <HStack padding="1">
                   <IconButton
                     aria-label="Edit"
                     variant="solid"
                     colorScheme="blue"
                     onClick={() => handleEdit(movie)}
+                    size="sm"
                     icon={<EditIcon />}
                   />
                   <IconButton
                     aria-label="Delete"
                     variant="solid"
                     colorScheme="red"
+                    size="sm"
                     onClick={() => handleDelete(movie)}
                     icon={<DeleteIcon />}
                   />
-                </Td>
-              </Tr>
-            ))}
-        </Tbody>
-      </Table>
-      <Button colorScheme="purple" onClick={onOpen}>
+                </HStack>
+                <Box
+                  mt="1"
+                  fontWeight="semibold"
+                  as="h4"
+                  lineHeight="tight"
+                  isTruncated
+                >
+                  {movie.id} - {movie.name}
+                </Box>
+              </Box>
+            </Box>
+          ))}
+      </SimpleGrid>
+
+      <Button
+        mt="2rem"
+        colorScheme="purple"
+        onClick={onOpen}
+        position="fixed"
+        mb="5rem"
+        mr="2rem"
+        bottom={0}
+        right={0}
+      >
         Add
       </Button>
     </div>
