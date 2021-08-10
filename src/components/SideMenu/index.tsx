@@ -1,8 +1,12 @@
-import { VStack, Link, Text, Flex, useBreakpointValue } from '@chakra-ui/react'
-import { SunIcon, MoonIcon } from '@chakra-ui/icons'
 import React from 'react'
+import { VStack, Link, Text, Flex, useBreakpointValue } from '@chakra-ui/react'
+import { ArrowBackIcon, SettingsIcon } from '@chakra-ui/icons'
+
+import useGlobal from 'src/hooks/useGlobal'
 
 export function SideMenu() {
+  const { logout } = useGlobal()
+
   const height = useBreakpointValue({
     base: '90%',
     xl: '90%',
@@ -34,32 +38,32 @@ export function SideMenu() {
           alignItems="center"
           py="1"
           pl={8}
-          href="/"
-          // color="purple.500"
-          // borderLeft="3px solid"
+          href="/dashboard/movies"
+          color="purple.500"
+          borderLeft="3px solid"
         >
-          <SunIcon size="20" />
-          <Text ml="4" fontSize="medium" fontWeight="medium">
-            Dashboard
-          </Text>
-        </Link>
-
-        <Link
-          display="flex"
-          alignItems="center"
-          py="1"
-          pl={8}
-          mt="auto"
-          href="/movies"
-          // color="gray.500"
-          // borderLeft="3px solid transparent"
-        >
-          <MoonIcon size="20" />
+          <SettingsIcon size="20" />
           <Text ml="4" fontSize="medium" fontWeight="medium">
             Movies
           </Text>
         </Link>
       </VStack>
+
+      <Link
+        display="flex"
+        alignItems="center"
+        py="1"
+        pl={8}
+        color="gray.500"
+        borderLeft="3px solid transparent"
+        mt="auto"
+        onClick={logout}
+      >
+        <ArrowBackIcon size="20" />
+        <Text ml="4" fontSize="medium" fontWeight="medium">
+          Logout
+        </Text>
+      </Link>
     </Flex>
   )
 }

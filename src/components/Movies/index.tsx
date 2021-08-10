@@ -10,8 +10,8 @@ import {
   ModalOverlay
 } from '@chakra-ui/modal'
 import { useForm } from 'react-hook-form'
-import { Table, TableCaption, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/table'
-import useGlobal from 'src/hooks/useGlobal'
+import { TableCaption } from '@chakra-ui/table'
+import { Table, Tbody, Td, Th, Thead, Tr } from './Table'
 import {
   FormControl,
   FormErrorMessage,
@@ -22,6 +22,10 @@ import { Text } from '@chakra-ui/react'
 import { useState } from 'react'
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 
+import useGlobal from 'src/hooks/useGlobal'
+
+import './styles.css'
+
 function Movies() {
   const { movies, setMovies, code, setCode } = useGlobal()
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -31,13 +35,15 @@ function Movies() {
   } = useForm()
 
   const [addingName, setAddingName] = useState('')
+  const [addingImageUrl, setAddingImageUrl] = useState('')
   const [addingCode, setAddingCode] = useState(code)
 
   function handleAddMovie() {
     const data: any = {}
     data.id = addingCode
     data.name = addingName
-    if (addingName) {
+    data.imageUrl = addingImageUrl
+    if (addingName && addingImageUrl) {
       if (movies.find((movie: any) => movie.id === data.id)) {
         setMovies(
           movies.map((movie: any) => {
@@ -49,17 +55,20 @@ function Movies() {
       } else {
         data.id = code
         data.name = addingName
+        data.imageUrl = addingImageUrl
         setMovies([...movies, data])
         setCode(data.id + 1)
         setAddingCode(data.id + 1)
       }
       setAddingName('')
+      setAddingImageUrl('')
     }
   }
 
   function handleEdit(data: any) {
     setAddingCode(data.id)
     setAddingName(data.name)
+    setAddingImageUrl(data.imageUrl)
     onOpen()
   }
 
@@ -97,6 +106,21 @@ function Movies() {
                   {errors.name && errors.name.message}
                 </FormErrorMessage>
               </FormControl>
+
+              <FormControl pt="1rem" isInvalid={errors.name}>
+                <FormLabel htmlFor="imageUrl">Image URL</FormLabel>
+                <Input
+                  id="imageUrl"
+                  placeholder="Image URL"
+                  size="lg"
+                  focusBorderColor="blue.500"
+                  value={addingImageUrl}
+                  onChange={e => setAddingImageUrl(e.target.value)}
+                />
+                <FormErrorMessage>
+                  {errors.name && errors.name.message}
+                </FormErrorMessage>
+              </FormControl>
             </ModalBody>
 
             <ModalFooter>
@@ -109,12 +133,13 @@ function Movies() {
         </form>
       </Modal>
 
-      <Table variant="striped">
+      <Table variant="striped" colorScheme="purple">
         <TableCaption>Movies playlist to watch soon!</TableCaption>
         <Thead>
           <Tr>
             <Th>ID</Th>
             <Th>Name</Th>
+            <Th>Image URL</Th>
             <Th>Actions</Th>
           </Tr>
         </Thead>
@@ -124,6 +149,7 @@ function Movies() {
               <Tr key={movie.id}>
                 <Td isNumeric>{movie.id}</Td>
                 <Td>{movie.name}</Td>
+                <Td>{movie.imageUrl}</Td>
                 <Td>
                   <IconButton
                     aria-label="Edit"
@@ -144,7 +170,7 @@ function Movies() {
             ))}
         </Tbody>
       </Table>
-      <Button colorScheme="blue" onClick={onOpen}>
+      <Button colorScheme="purple" onClick={onOpen}>
         Add
       </Button>
     </div>

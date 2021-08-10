@@ -1,13 +1,16 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
+import DashboardMovies from 'src/pages/Dashboard/DashboardMovies'
+import PrivateRoute from './PrivateRoute'
+import Login from 'src/pages/Login'
 import Home from 'src/pages/Home'
-import Movies from 'src/pages/Movies'
 
 const Routes = () => (
   <Switch>
     <Route path="/" exact component={Home} />
-    <Route path="/movies" exact component={Movies} />
+    <Route path="/login" exact component={Login} />
+    <PrivateRoute path="/dashboard/movies" exact component={DashboardMovies} />
   </Switch>
 )
 

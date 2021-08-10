@@ -1,8 +1,12 @@
-import { Box, IconButton, Flex, Link, Spacer } from '@chakra-ui/react'
-import { SunIcon, MoonIcon } from '@chakra-ui/icons'
 import React from 'react'
+import { Box, IconButton, Flex, Link, Spacer } from '@chakra-ui/react'
+import { ArrowBackIcon, SettingsIcon } from '@chakra-ui/icons'
+
+import useGlobal from 'src/hooks/useGlobal'
 
 export function MobileMenu() {
+  const { logout } = useGlobal()
+
   return (
     <Box
       bg="purple.600"
@@ -14,23 +18,23 @@ export function MobileMenu() {
       zIndex="1000"
     >
       <Flex px="2rem">
-        <Link href="/">
+        <Link onClick={() => logout()}>
           <IconButton
             aria-label="Home"
             variant="solid"
             colorScheme="purple"
-            icon={<SunIcon />}
+            icon={<ArrowBackIcon />}
           />
         </Link>
 
         <Spacer />
 
-        <Link href="/movies">
+        <Link href="/dashboard/movies">
           <IconButton
             aria-label="Movies"
             variant="solid"
             colorScheme="purple"
-            icon={<MoonIcon />}
+            icon={<SettingsIcon />}
           />
         </Link>
       </Flex>
